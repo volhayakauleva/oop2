@@ -44,7 +44,6 @@ public:
 	class Iterator {
 	private:
 		Element* currNode;
-		//List* currList;
 	public:
 		Iterator(Element * node) {
 			currNode = node;
@@ -66,10 +65,14 @@ public:
 		}
 
 		void operator++() {
-			if (currNode) {
+			try{
+				if (!currNode)
+					throw string("Р”РѕСЃС‚РёРіРЅСѓС‚ РєРѕРЅРµС† СЃРїРёСЃРєР°!");
 				currNode = currNode->next;
 			}
-			else cout << "Достигнут конец списка!" << endl;
+			catch (string str) {
+				cout << str << endl;
+			}
 		}
 
 		Element* nextNode() {
@@ -99,8 +102,6 @@ public:
 				<< currNode->parts << setw(14)
 				<< currNode->rate << endl;
 		}
-
-		//		Element* ReturnHead() { return currList->Head; }
 	};
 
 	Iterator begin() const {
@@ -121,18 +122,30 @@ public:
 		}
 	}
 
+	int checkIfInt(string str)
+	{
+		int a;
+		while (!(cin >> a) || a < 1)
+		{
+			cin.clear();
+			cin.ignore(cin.rdbuf()->in_avail());
+			cout << str;
+		}
+		return a;
+	}
+
 	void Enter() {
-		cout << "Название: ";
+		cout << "РќР°Р·РІР°РЅРёРµ: ";
 		cin >> _name;
-		cout << "Страна: ";
+		cout << "РЎС‚СЂР°РЅР°: ";
 		cin.clear();
 		cin >> _country;
-		cout << "Части: ";
-		cin >> _parts;
-		cout << "Год: ";
-		cin >> _year;
-		cout << "Рейтинг: ";
-		cin >> _rate;
+		cout << "Р§Р°СЃС‚Рё: ";
+		_parts = checkIfInt("РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ (Р§Р°СЃС‚Рё): ");
+		cout << "Р“РѕРґ: ";
+		_year = checkIfInt("РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ (Р“РѕРґ): ");
+		cout << "Р РµР№С‚РёРЅРі: ";
+		_rate = checkIfInt("РџРѕРІС‚РѕСЂРёС‚Рµ РІРІРѕРґ (Р РµР№С‚РёРЅРі): ");
 	}
 
 	int GetCount() {
@@ -174,11 +187,11 @@ public:
 	{
 		try {
 			int id;
-			cout << "Номер изменяемого объекта: ";
+			cout << "РќРѕРјРµСЂ РёР·РјРµРЅСЏРµРјРѕРіРѕ РѕР±СЉРµРєС‚Р°: ";
 			cin >> id;
 
 			if (id == 0 || id > Size())
-				throw string("Вы не можете изменить этот элемент.");
+				throw string("Р’С‹ РЅРµ РјРѕР¶РµС‚Рµ РёР·РјРµРЅРёС‚СЊ СЌС‚РѕС‚ СЌР»РµРјРµРЅС‚.");
 
 			Iterator it = begin();
 			for (int i = 1; i < id; i++)
@@ -196,10 +209,10 @@ public:
 		try {
 			Iterator it = begin();
 			if (it == end())
-				throw string("Список пуст!");
+				throw string("РЎРїРёСЃРѕРє РїСѓСЃС‚!");
 			Head = it.nextNode();
 			delete *it;
-			cout << "Элемент был удален." << endl;
+			cout << "Р­Р»РµРјРµРЅС‚ Р±С‹Р» СѓРґР°Р»РµРЅ." << endl;
 		}
 		catch (string str) {
 			cout << str << endl;
@@ -217,8 +230,8 @@ public:
 		try {
 			Iterator it = begin();
 			if (it == end())
-				throw string("Список пуст!");
-			cout << "Головной элемент: ";
+				throw string("РЎРїРёСЃРѕРє РїСѓСЃС‚!");
+			cout << "Р“РѕР»РѕРІРЅРѕР№ СЌР»РµРјРµРЅС‚: ";
 			it.CurrShow();
 		}
 		catch (string str) {
@@ -243,19 +256,13 @@ public:
 		return s;
 	}
 
-	/*class Algoritm {
+	class Algoritm {																																																																																																											};
+
 	public:
-		Element* curr;
-		List::Iterator it = List::Iterator(List::Head);
-		it = List::begin();*/
-
-
 	void Sort(int props)
 	{
-		Iterator left = begin();
-		Iterator right = left.nextNode();
-		//Element* left = this->Head;
-		//Element* right = this->Head->next;
+		List::Iterator left = List::begin();
+		List::Iterator right = left.nextNode();
 
 		while (left.nextNode())
 		{
@@ -301,7 +308,7 @@ public:
 		}
 	}
 
-	void swap(Iterator q, Iterator p)
+	void swap(List::Iterator q, List::Iterator p)
 	{
 		string temp = (*q)->name.substr(0, (*q)->name.size());
 		(*q)->name = (*p)->name.substr(0, (*p)->name.size());
@@ -327,23 +334,23 @@ public:
 	void FindElement(string str)
 	{
 		try {
-			Iterator it = begin();
+			List::Iterator it = List::begin();
 			if (it == end())
-				throw string("Список пуст!");
+				throw string("РЎРїРёСЃРѕРє РїСѓСЃС‚!");
 
 			bool result = false;
-			for (it = begin(); result == true, it != end(); ++it) {
+			for (it = List::begin(); result == true, it != List::end(); ++it) {
 				size_t pos = ((*it)->name).find(str);
 				if (pos != string::npos)
 				{					
-					cout << "Запрос найден:" << endl;
+					cout << "Р—Р°РїСЂРѕСЃ РЅР°Р№РґРµРЅ:" << endl;
 					it.CurrShow();
 					cout << endl;
 					result = true;
 				}
 			}
 			if (result == false)
-				cout << "Ничего не найдено" << endl;
+				cout << "РќРёС‡РµРіРѕ РЅРµ РЅР°Р№РґРµРЅРѕ" << endl;
 		}
 		catch (string str) {
 			cout << str << endl;
@@ -353,11 +360,11 @@ public:
 	void DeleteDuplicates()
 	{
 		try {		
-			Iterator it = begin();
+			List::Iterator it = List::begin();
 			if (it == end())
-				throw string("Список пуст!");
+				throw string("РЎРїРёСЃРѕРє РїСѓСЃС‚!");
 			Sort(0);
-			for (it = begin(); it.nextNode()!=NULL && it != end(); ++it) {
+			for (it = List::begin(); it.nextNode()!=NULL && it != List::end(); ++it) {
 				Iterator itN = it.nextNode();
 				if ((*it)->name == (*itN)->name && (*it)->country == (*itN)->country &&
 					(*it)->year == (*itN)->year && (*it)->parts == (*itN)->parts)
@@ -372,7 +379,6 @@ public:
 		}
 	}
 
-	//};
 };
 
 
@@ -382,27 +388,20 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	List example;
-	example.Add("Белоснежка", "Германия", 2, 1982, 8.845);
-	example.Add("Русалочка", "Дания", 1, 2000, 9.15);
-	example.Add("Колобок", "Россия", 1, 1998, 8.168);
-	example.Add("Суперсемейка", "Америка", 2, 2015, 8.745);
-	example.Add("Суперсемейка_2", "Америка", 2, 2019, 7.900);
-	example.Add("Рапунцель", "Америка", 1, 2010, 8.55);
-	example.Add("Рапунцель", "Америка", 1, 2010, 8.55);
-	
-
-	cout << "Размер списка: " << example.Size() << endl;
-	example.HeadElem();
-	
-
-	example.Print();
+	example.Add("Р‘РµР»РѕСЃРЅРµР¶РєР°", "Р“РµСЂРјР°РЅРёСЏ", 2, 1982, 8.845);
+	example.Add("Р СѓСЃР°Р»РѕС‡РєР°", "Р”Р°РЅРёСЏ", 1, 2000, 9.15);
+	example.Add("РљРѕР»РѕР±РѕРє", "Р РѕСЃСЃРёСЏ", 1, 1998, 8.168);
+	example.Add("РЎСѓРїРµСЂСЃРµРјРµР№РєР°", "РђРјРµСЂРёРєР°", 2, 2015, 8.745);
+	example.Add("РЎСѓРїРµСЂСЃРµРјРµР№РєР°_2", "РђРјРµСЂРёРєР°", 2, 2019, 7.900);
+	example.Add("Р Р°РїСѓРЅС†РµР»СЊ", "РђРјРµСЂРёРєР°", 1, 2010, 8.55);
+	example.Add("Р Р°РїСѓРЅС†РµР»СЊ", "РђРјРµСЂРёРєР°", 1, 2010, 8.55);
 
 	int choice;
 
-	cout << "Меню: \n1 - Добавить; 2 - Показать; 3 - Показать головной элемент; \n4 - Изменить; 5 - Удалить элемент;" <<
-		"\n6 - Сорт по названию; 7 - Сорт по стране; 8 - Сорт по частям; 9 - Сорт по году; 10 - Сорт по рейтингу \n" <<
-		"11 - Поиск по названию; 12 - Удалить дубликаты; 13 - Выход" << endl;
-	cout << "\nВыбор: ";
+	cout << "РњРµРЅСЋ: \n1 - Р”РѕР±Р°РІРёС‚СЊ; 2 - РџРѕРєР°Р·Р°С‚СЊ; 3 - РџРѕРєР°Р·Р°С‚СЊ РіРѕР»РѕРІРЅРѕР№ СЌР»РµРјРµРЅС‚; \n4 - РР·РјРµРЅРёС‚СЊ; 5 - РЈРґР°Р»РёС‚СЊ СЌР»РµРјРµРЅС‚;" <<
+		"\n6 - РЎРѕСЂС‚ РїРѕ РЅР°Р·РІР°РЅРёСЋ; 7 - РЎРѕСЂС‚ РїРѕ СЃС‚СЂР°РЅРµ; 8 - РЎРѕСЂС‚ РїРѕ С‡Р°СЃС‚СЏРј; 9 - РЎРѕСЂС‚ РїРѕ РіРѕРґСѓ; 10 - РЎРѕСЂС‚ РїРѕ СЂРµР№С‚РёРЅРіСѓ \n" <<
+		"11 - РџРѕРёСЃРє РїРѕ РЅР°Р·РІР°РЅРёСЋ; 12 - РЈРґР°Р»РёС‚СЊ РґСѓР±Р»РёРєР°С‚С‹; 13 - Р’С‹С…РѕРґ" << endl;
+	cout << "\nР’С‹Р±РѕСЂ: ";
 	cin >> choice;
 
 	while (choice >= 1 & choice <= 12) {
@@ -430,50 +429,50 @@ int main()
 		}
 		case 6: {
 			example.Sort(0);
-			cout << setw(40) << "По названию: " << endl;
+			cout << setw(40) << "РџРѕ РЅР°Р·РІР°РЅРёСЋ: " << endl;
 			cout << endl;
 			example.Print();
 			break;
 		}
 		case 7: {
 			example.Sort(1);
-			cout << setw(40) << "По стране" << endl;
+			cout << setw(40) << "РџРѕ СЃС‚СЂР°РЅРµ" << endl;
 			cout << endl;
 			example.Print();
 			break;
 		}case 8: {
 			example.Sort(2);
-			cout << setw(40) << "По частям" << endl;
+			cout << setw(40) << "РџРѕ С‡Р°СЃС‚СЏРј" << endl;
 			cout << endl;
 			example.Print();
 			break;
 		}
 		case 9: {
 			example.Sort(3);
-			cout << setw(40) << "По году" << endl;
+			cout << setw(40) << "РџРѕ РіРѕРґСѓ" << endl;
 			cout << endl;
 			example.Print();
 			break;
 		}
 		case 10: {
 			example.Sort(4);
-			cout << setw(40) << "По рейтингу" << endl;
+			cout << setw(40) << "РџРѕ СЂРµР№С‚РёРЅРіСѓ" << endl;
 			cout << endl;
 			example.Print();
 			break; 
 		}
 		case 11: {
-			cout << "Введите часть названия: ";
+			cout << "Р’РІРµРґРёС‚Рµ С‡Р°СЃС‚СЊ РЅР°Р·РІР°РЅРёСЏ: ";
 			string findStr;
 			cin >> findStr;
 			example.FindElement(findStr);
 			break; }
 		case 12: {
 			example.DeleteDuplicates();
-			cout << "Дубликаты удалены." << endl;
+			cout << "Р”СѓР±Р»РёРєР°С‚С‹ СѓРґР°Р»РµРЅС‹." << endl;
 			break; }
 		}
-		cout << "Выбор: ";
+		cout << "Р’С‹Р±РѕСЂ: ";
 		cin >> choice;
 	}
 	system("pause");
