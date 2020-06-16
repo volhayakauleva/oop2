@@ -19,7 +19,7 @@ public:
 			{
 				gridView[i][j] = 10;
 				if (rand() % mines == 0) {
-					gridLogic[i][j] = 9;			//мины
+					gridLogic[i][j] = 9;			//Г¬ГЁГ­Г»
 					minesCount++;
 				}
 				else gridLogic[i][j] = 0;
@@ -38,11 +38,11 @@ public:
 				if (gridLogic[i - 1][j - 1] == 9) n++;
 				if (gridLogic[i - 1][j + 1] == 9) n++;
 				if (gridLogic[i + 1][j - 1] == 9) n++;
-				gridLogic[i][j] = n;							//числа
+				gridLogic[i][j] = n;							//Г·ГЁГ±Г«Г 
 			}
 	}
 
-	void open(int i, int j) {									//открытие области
+	void open(int i, int j) {									//Г®ГІГЄГ°Г»ГІГЁГҐ Г®ГЎГ«Г Г±ГІГЁ
 		n++;
 		if ((i + 1) <= 10)
 			if (gridView[i + 1][j] == 10 && gridLogic[i + 1][j] < 9) {
@@ -81,10 +81,10 @@ public:
 		RenderWindow app(VideoMode(550, 400), "Saper");
 
 		Texture menuTexture1, menuTexture2, menuTexture3, restartTexture;
-		menuTexture1.loadFromFile("D:\\автокад\\ооп\\saper8\\images/1.png");
-		menuTexture2.loadFromFile("D:\\автокад\\ооп\\saper8\\images/2.png");
-		menuTexture3.loadFromFile("D:\\автокад\\ооп\\saper8\\images/3.png");
-		restartTexture.loadFromFile("D:\\автокад\\ооп\\saper8\\images/restart.png");
+		menuTexture1.loadFromFile("D:\\Г ГўГІГ®ГЄГ Г¤\\Г®Г®ГЇ\\saper8\\images/1.png");
+		menuTexture2.loadFromFile("D:\\Г ГўГІГ®ГЄГ Г¤\\Г®Г®ГЇ\\saper8\\images/2.png");
+		menuTexture3.loadFromFile("D:\\Г ГўГІГ®ГЄГ Г¤\\Г®Г®ГЇ\\saper8\\images/3.png");
+		restartTexture.loadFromFile("D:\\Г ГўГІГ®ГЄГ Г¤\\Г®Г®ГЇ\\saper8\\images/restart.png");
 		Sprite menu1(menuTexture1), menu2(menuTexture2), menu3(menuTexture3), restart(restartTexture);
 		int menuNum = 0;
 		restart.setPosition(400, 30);
@@ -93,9 +93,9 @@ public:
 		menu3.setPosition(400, 240);
 
 		Texture winT, loseT, nonT;
-		winT.loadFromFile("D:\\автокад\\ооп\\saper8\\images/win.png");
-		loseT.loadFromFile("D:\\автокад\\ооп\\saper8\\images/lose.png");
-		nonT.loadFromFile("D:\\автокад\\ооп\\saper8\\images/non.png");
+		winT.loadFromFile("D:\\Г ГўГІГ®ГЄГ Г¤\\Г®Г®ГЇ\\saper8\\images/win.png");
+		loseT.loadFromFile("D:\\Г ГўГІГ®ГЄГ Г¤\\Г®Г®ГЇ\\saper8\\images/lose.png");
+		nonT.loadFromFile("D:\\Г ГўГІГ®ГЄГ Г¤\\Г®Г®ГЇ\\saper8\\images/non.png");
 		Sprite win(winT), lose(loseT), non(nonT);
 
 		win.setPosition(350, 350);
@@ -103,7 +103,7 @@ public:
 		non.setPosition(350, 350);
 
 		Texture t;
-		t.loadFromFile("D:\\автокад\\ооп\\saper8\\images\\tiles.jpg");
+		t.loadFromFile("D:\\Г ГўГІГ®ГЄГ Г¤\\Г®Г®ГЇ\\saper8\\images\\tiles.jpg");
 		Sprite s(t);
 
 		while (app.isOpen())
@@ -122,7 +122,7 @@ public:
 
 				if (e.type == Event::MouseButtonPressed)
 				{
-					if (e.key.code == Mouse::Left)				//лкм
+					if (e.key.code == Mouse::Left)				//Г«ГЄГ¬
 					{
 						if (menuNum == 1) { print(difficulty); }
 						if (menuNum == 2) { difficulty = 10; print(difficulty); app.draw(non); }
@@ -156,7 +156,7 @@ public:
 
 
 					}
-					else if (e.key.code == Mouse::Right)		//пкм
+					else if (e.key.code == Mouse::Right)		//ГЇГЄГ¬
 						gridView[x][y] = 11;
 				}
 			}
@@ -164,7 +164,7 @@ public:
 			for (int i = 1; i <= 10; i++)
 				for (int j = 1; j <= 10; j++)
 				{
-					//gridView[i][j] = gridLogic[i][j];  //просмотреть поле
+					//gridView[i][j] = gridLogic[i][j];  //ГЇГ°Г®Г±Г¬Г®ГІГ°ГҐГІГј ГЇГ®Г«ГҐ
 					s.setTextureRect(IntRect(gridView[i][j] * w, 0, w, w));
 					s.setPosition(i*w, j*w);
 					app.draw(s);
