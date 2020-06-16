@@ -255,13 +255,21 @@ public:
 		}
 		return s;
 	}
+};
 
-	class Algoritm {																																																																																																											};
+List myList;
 
-	public:
+class Algoritm {
+	List algList;
+public:
+
+	Algoritm(List _algList) {
+		algList = _algList;
+	};
+public:
 	void Sort(int props)
 	{
-		List::Iterator left = List::begin();
+		List::Iterator left = myList.begin();
 		List::Iterator right = left.nextNode();
 
 		while (left.nextNode())
@@ -334,15 +342,15 @@ public:
 	void FindElement(string str)
 	{
 		try {
-			List::Iterator it = List::begin();
-			if (it == end())
+			List::Iterator it = myList.begin();
+			if (it == myList.end())
 				throw string("Список пуст!");
 
 			bool result = false;
-			for (it = List::begin(); result == true, it != List::end(); ++it) {
+			for (it = myList.begin(); result == true, it != myList.end(); ++it) {
 				size_t pos = ((*it)->name).find(str);
 				if (pos != string::npos)
-				{					
+				{
 					cout << "Запрос найден:" << endl;
 					it.CurrShow();
 					cout << endl;
@@ -359,13 +367,13 @@ public:
 
 	void DeleteDuplicates()
 	{
-		try {		
-			List::Iterator it = List::begin();
-			if (it == end())
+		try {
+			List::Iterator it = myList.begin();
+			if (it == myList.end())
 				throw string("Список пуст!");
 			Sort(0);
-			for (it = List::begin(); it.nextNode()!=NULL && it != List::end(); ++it) {
-				Iterator itN = it.nextNode();
+			for (it = myList.begin(); it.nextNode() != NULL && it != myList.end(); ++it) {
+				List::Iterator itN = it.nextNode();
 				if ((*it)->name == (*itN)->name && (*it)->country == (*itN)->country &&
 					(*it)->year == (*itN)->year && (*it)->parts == (*itN)->parts)
 				{
@@ -378,9 +386,7 @@ public:
 			cout << str << endl;
 		}
 	}
-
 };
-
 
 int main()
 {
@@ -388,13 +394,14 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	List example;
-	example.Add("Белоснежка", "Германия", 2, 1982, 8.845);
-	example.Add("Русалочка", "Дания", 1, 2000, 9.15);
-	example.Add("Колобок", "Россия", 1, 1998, 8.168);
-	example.Add("Суперсемейка", "Америка", 2, 2015, 8.745);
-	example.Add("Суперсемейка_2", "Америка", 2, 2019, 7.900);
-	example.Add("Рапунцель", "Америка", 1, 2010, 8.55);
-	example.Add("Рапунцель", "Америка", 1, 2010, 8.55);
+	Algoritm algEx(myList);
+	myList.Add("Белоснежка", "Германия", 2, 1982, 8.845);
+	myList.Add("Русалочка", "Дания", 1, 2000, 9.15);
+	myList.Add("Колобок", "Россия", 1, 1998, 8.168);
+	myList.Add("Суперсемейка", "Америка", 2, 2015, 8.745);
+	myList.Add("Суперсемейка_2", "Америка", 2, 2019, 7.900);
+	myList.Add("Рапунцель", "Америка", 1, 2010, 8.55);
+	myList.Add("Рапунцель", "Америка", 1, 2010, 8.55);
 
 	int choice;
 
@@ -408,67 +415,67 @@ int main()
 		switch (choice)
 		{
 		case 1: {
-			example.Add();
+			myList.Add();
 			break;
 		}
 		case 2: {
-			example.Print();
+			myList.Print();
 			break;
 		}
 		case 3: {
-			example.HeadElem();
+			myList.HeadElem();
 			break;
 		}
 		case 4: {
-			example.Change();
+			myList.Change();
 			break;
 		}
 		case 5: {
-			example.Change();
+			myList.Remove();
 			break; 
 		}
 		case 6: {
-			example.Sort(0);
+			algEx.Sort(0);
 			cout << setw(40) << "По названию: " << endl;
 			cout << endl;
-			example.Print();
+			myList.Print();
 			break;
 		}
 		case 7: {
-			example.Sort(1);
+			algEx.Sort(1);
 			cout << setw(40) << "По стране" << endl;
 			cout << endl;
-			example.Print();
+			myList.Print();
 			break;
 		}case 8: {
-			example.Sort(2);
+			algEx.Sort(2);
 			cout << setw(40) << "По частям" << endl;
 			cout << endl;
-			example.Print();
+			myList.Print();
 			break;
 		}
 		case 9: {
-			example.Sort(3);
+			algEx.Sort(3);
 			cout << setw(40) << "По году" << endl;
 			cout << endl;
-			example.Print();
+			myList.Print();
 			break;
 		}
 		case 10: {
-			example.Sort(4);
+			algEx.Sort(4);
 			cout << setw(40) << "По рейтингу" << endl;
 			cout << endl;
-			example.Print();
+			myList.Print();
 			break; 
 		}
 		case 11: {
 			cout << "Введите часть названия: ";
 			string findStr;
 			cin >> findStr;
-			example.FindElement(findStr);
+			algEx.FindElement(findStr);
 			break; }
 		case 12: {
-			example.DeleteDuplicates();
+			algEx.DeleteDuplicates();
 			cout << "Дубликаты удалены." << endl;
 			break; }
 		}
@@ -476,4 +483,5 @@ int main()
 		cin >> choice;
 	}
 	system("pause");
+	return 0;
 }
